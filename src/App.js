@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Login from './components/Login'
+import {Card } from './components/Card';
 
 
 // Once the user has logged in, they should be able to see the most recent repositories (repos) that use has forked and their most recent pull requests.
@@ -16,7 +17,7 @@ class App extends Component {
     super();
     this.state = { 
       username: '',
-      repos: [],
+      forks: [],
       pulls: [],
     };
   }
@@ -31,22 +32,37 @@ class App extends Component {
     e.preventDefault();
     fetch(`https://api.github.com/users/${this.state.username}/events`)
       .then(res => res.json())
-        .then(event => {
-          const pulls = repos.filter(event => repo.type === "PullRequest" )
-          const forks = repos.filter(repo => repo.type === "ForkRequest")
-          this.setState({{ forks, pulls }})
-        })
-        
-  }
+        .then(events => {
+          console.log(events);
+          const pulls = events.filter(({type}) => type === "PullRequestEvent" )
+            .map(({payload: { pull_request: {title, html_url}}}) => ({url: html_url, name: title}))
 
- 
+
+          const forks = events.filter(({type}) => type === "ForkEvent")
+            .map(({repo:{url, name}}) => ({url, name}))
+          this.setState({ forks, pulls })
+        })
+  }
 
   render() {
     return (
       <div className="App">
         <Login handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
         <div className="Repos">
-       
+        <Card>
+          <p>
+            FIRST
+          </p>
+          <div>
+
+          <p>
+            THIS IS A TEST
+          </p>
+          <p>
+            THIS IS A DOUBLE TEST
+          </p>
+          </div>
+        </Card>
         </div>
     </div>
     );
