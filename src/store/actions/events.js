@@ -1,6 +1,6 @@
 import { GET_EVENTS, GET_EVENTS_SUCCESS, GET_EVENTS_FAILURE } from "../constants"
 
-const eventsAction = (dispatch, username) => {
+const eventsAction = (username) => {
     return (dispatch) => {
         dispatch({type: GET_EVENTS});
         fetch(`https://api.github.com/users/${username}/events`)

@@ -5,33 +5,7 @@ const initialState = {
     forks: [],
     error: null,
     gettingEvents: false,
-    loggedIn: false,
-}
-
-const transformPulls = (data) => {
-    return data.filter(({type}) => type === "PullRequestEvent" )
-        .map(({id, payload: { pull_request: {title, html_url, state, merged}}}) => {
-            return {
-            url: html_url, 
-            name: title,
-            state,
-            merged,
-            id,
-            }
-        });
-}
-
-const transformForks = (data) => {
-    return data.filter(({type}) => type === "ForkEvent")
-        .map(({id, repo: { name }, payload: { forkee: {full_name, name: title}}}) => {
-            return {
-                baseRepoUrl: `https://github.com/${name}`, 
-                repoUrl: `https://github.com/${full_name}`, 
-                title,
-                id,
-            }
-        })
-
+    receivedEvents: false,
 }
 
 const eventsReducer = (state = initialState, {type, payload} ) => {
@@ -45,7 +19,7 @@ const eventsReducer = (state = initialState, {type, payload} ) => {
             return {
                 ...state, 
                 gettingEvents: false, 
-                loggedIn: true,
+                receivedEvents: true,
                 pulls: payload.filter(({type}) => type === "PullRequestEvent" )
                 .map(({payload: { pull_request: {title, html_url, state, merged}}}) => {
                     return {
