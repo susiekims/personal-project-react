@@ -18,6 +18,7 @@ class App extends Component {
       loggedIn: false,
       forks: [],
       pulls: [],
+      username: '',
     };
   }
 
@@ -51,7 +52,7 @@ class App extends Component {
                   repoUrl: `https://github.com/${full_name}`, 
                   title}
                 })
-          this.setState({ loggedIn: true, forks, pulls })
+          this.setState({ loggedIn: true, forks, pulls, username: '' })
         })
   }
 
@@ -61,7 +62,7 @@ class App extends Component {
         { 
           this.state.loggedIn ? 
           <Main forks={this.state.forks} pulls={this.state.pulls}/> :
-          <Login loggedIn={this.state.loggedIn} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+          <Login handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} />
         }
     </div>
     );
