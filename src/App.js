@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Login from './components/Login'
-import {Card } from './components/Card';
-
+import Login from './login/Login';
+import Main from './main/Main';
 
 // Once the user has logged in, they should be able to see the most recent repositories (repos) that use has forked and their most recent pull requests.
 
@@ -16,7 +15,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = { 
-      username: '',
+      loggedIn: false,
       forks: [],
       pulls: [],
     };
@@ -34,36 +33,36 @@ class App extends Component {
       .then(res => res.json())
         .then(events => {
           console.log(events);
+          
           const pulls = events.filter(({type}) => type === "PullRequestEvent" )
-            .map(({payload: { pull_request: {title, html_url}}}) => ({url: html_url, name: title}))
-
+            .map(({payload: { pull_request: {title, html_url, state, merged}}}) => {
+              return {
+                url: html_url, 
+                name: title,
+                state,
+                merged,
+              }
+          });
 
           const forks = events.filter(({type}) => type === "ForkEvent")
-            .map(({repo:{url, name}}) => ({url, name}))
-          this.setState({ forks, pulls })
+            .map(({repo: { name }, payload: { forkee: {full_name, name: title}}}) => {
+                return {
+                  baseRepoUrl: `https://github.com/${name}`, 
+                  repoUrl: `https://github.com/${full_name}`, 
+                  title}
+                })
+          this.setState({ loggedIn: true, forks, pulls })
         })
   }
 
   render() {
     return (
       <div className="App">
-        <Login handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
-        <div className="Repos">
-        <Card>
-          <p>
-            FIRST
-          </p>
-          <div>
-
-          <p>
-            THIS IS A TEST
-          </p>
-          <p>
-            THIS IS A DOUBLE TEST
-          </p>
-          </div>
-        </Card>
-        </div>
+        { 
+          this.state.loggedIn ? 
+          <Main forks={this.state.forks} pulls={this.state.pulls}/> :
+          <Login loggedIn={this.state.loggedIn} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+        }
     </div>
     );
   }

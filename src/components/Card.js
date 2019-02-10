@@ -1,29 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 
-export const Card = ({children}) => {
-return (<div style={{background:"red"}}>
- {children}
-</div>)}
-
-export default Card;
-
-const statusStyles = {
-    complete: {
-        "background-color": "red"
-    },
-    open:{
-        "background-color": "red"
-
-    },
-}
-
-const Card2 = styled.div`
-    background-color: red;
-    color: ${(props) => props.isCompleted ? "red" : "green"}
-
-    ${props => { 
-        const style = statusStyles[props.status]
-        return style
-
-    }}
+const Card = styled.div`
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+    margin: 20px auto;
+    width: 300px;
+    position: relative;
 `
+
+export default ({children}) => (
+    <Card>
+        {children}
+    </Card>
+)
