@@ -5,28 +5,32 @@ const initialState = {
     forks: [],
     error: null,
     gettingEvents: false,
+    loggedIn: false,
 }
 
 const transformPulls = (data) => {
     return data.filter(({type}) => type === "PullRequestEvent" )
-        .map(({payload: { pull_request: {title, html_url, state, merged}}}) => {
+        .map(({id, payload: { pull_request: {title, html_url, state, merged}}}) => {
             return {
             url: html_url, 
             name: title,
             state,
             merged,
+            id,
             }
         });
 }
 
 const transformForks = (data) => {
     return data.filter(({type}) => type === "ForkEvent")
-        .map(({repo: { name }, payload: { forkee: {full_name, name: title}}}) => {
+        .map(({id, repo: { name }, payload: { forkee: {full_name, name: title}}}) => {
             return {
                 baseRepoUrl: `https://github.com/${name}`, 
                 repoUrl: `https://github.com/${full_name}`, 
-                title}
-            })
+                title,
+                id,
+            }
+        })
 
 }
 
@@ -41,8 +45,24 @@ const eventsReducer = (state = initialState, {type, payload} ) => {
             return {
                 ...state, 
                 gettingEvents: false, 
-                pulls: transformPulls(payload), 
-                forks: transformForks(payload)
+                loggedIn: true,
+                pulls: payload.filter(({type}) => type === "PullRequestEvent" )
+                .map(({payload: { pull_request: {title, html_url, state, merged}}}) => {
+                    return {
+                    url: html_url, 
+                    name: title,
+                    state,
+                    merged,
+                    }
+                }),
+                forks: payload.filter(({type}) => type === "ForkEvent")
+                .map(({repo: { name }, payload: { forkee: {full_name, name: title}}}) => {
+                    return {
+                        baseRepoUrl: `https://github.com/${name}`, 
+                        repoUrl: `https://github.com/${full_name}`, 
+                        title
+                    }
+                })
             }
         case GET_EVENTS_FAILURE:
             return {

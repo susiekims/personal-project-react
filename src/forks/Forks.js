@@ -8,7 +8,7 @@ const Forks = ({forks}) => (
             forks.length === 0 ? <p>This user has no recent fork events.</p> :
             <ul>
                 {
-                    forks.map(({title, repoUrl, baseRepoUrl}) => <li><Fork title={title} repoUrl={repoUrl} baseRepoUrl={baseRepoUrl}/></li>)
+                    forks.map(({title, repoUrl, baseRepoUrl, id}) => <li key={id}><Fork title={title} repoUrl={repoUrl} baseRepoUrl={baseRepoUrl}/></li>)
                 }   
             </ul>
         }

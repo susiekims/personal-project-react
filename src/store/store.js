@@ -1,7 +1,10 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import eventsReducer from './reducers/events'
+// import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
-const store = createStore(eventsReducer);
+const middleware = applyMiddleware(thunk);
+const store = createStore(eventsReducer, middleware);
 
 export default store;
 

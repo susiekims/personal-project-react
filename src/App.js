@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from './login/Login';
 import Main from './main/Main';
+import { connect } from "react-redux";
+import eventsAction from './store/actions/events';
 
 // Once the user has logged in, they should be able to see the most recent repositories (repos) that use has forked and their most recent pull requests.
 
@@ -15,10 +17,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = { 
-      loggedIn: false,
-      forks: [],
-      pulls: [],
-      username: '',
+      username: ''
     };
   }
 
@@ -30,43 +29,35 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://api.github.com/users/${this.state.username}/events`)
-      .then(res => res.json())
-        .then(events => {
-          console.log(events);
-          
-          const pulls = events.filter(({type}) => type === "PullRequestEvent" )
-            .map(({payload: { pull_request: {title, html_url, state, merged}}}) => {
-              return {
-                url: html_url, 
-                name: title,
-                state,
-                merged,
-              }
-          });
-
-          const forks = events.filter(({type}) => type === "ForkEvent")
-            .map(({repo: { name }, payload: { forkee: {full_name, name: title}}}) => {
-                return {
-                  baseRepoUrl: `https://github.com/${name}`, 
-                  repoUrl: `https://github.com/${full_name}`, 
-                  title}
-                })
-          this.setState({ loggedIn: true, forks, pulls, username: '' })
-        })
+    this.props.getEvents(this.state.username);
+    this.setState({username: ''})
   }
 
   render() {
     return (
       <div className="App">
-        { 
-          this.state.loggedIn ? 
-          <Main forks={this.state.forks} pulls={this.state.pulls}/> :
-          <Login handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} />
-        }
+      {
+        this.props.loggedIn ? 
+        <Main forks={this.props.forks} pulls={this.props.pulls}/> :
+        <Login loggedIn={this.props.loggedIn} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+      }
     </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = ({pulls, forks, loggedIn}) => {
+  return {
+    pulls,
+    forks,
+    loggedIn,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  getEvents: (username) => dispatch(eventsAction(dispatch, username)),
+})
+
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default ConnectedApp;
