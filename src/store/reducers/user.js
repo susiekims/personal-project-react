@@ -19,13 +19,7 @@ const userReducer = (state = initialState, {type, payload} ) => {
                 ...state,
                 gettingUser: false, 
                 receivedUser: true,
-                user: {
-                    login: payload.login,
-                    name: payload.name,
-                    avatar_url: payload.avatar_url,
-                    html_url: payload.html_url,
-                    created_at: payload.created_at
-                }
+                user: payload
             }
         case GET_USER_FAILURE:
             return {

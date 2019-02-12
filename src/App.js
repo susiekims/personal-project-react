@@ -4,6 +4,8 @@ import Login from './login/Login';
 import Main from './main/Main';
 import { connect } from "react-redux";
 import eventsAction from './store/actions/events';
+import userAction from './store/actions/events';
+
 import eventsReducer from './store/reducers/events';
 
 // Once the user has logged in, they should be able to see the most recent repositories (repos) that use has forked and their most recent pull requests.
@@ -58,6 +60,7 @@ const mapStateToProps = ({userReducer, eventsReducer}) => {
 
 const mapDispatchToProps = (dispatch) => ({
   getEvents: (username) => dispatch(eventsAction(username)),
+  getUsers: (username) => dispatch(userAction(username))
 })
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
