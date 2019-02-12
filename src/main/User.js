@@ -14,9 +14,7 @@ const User = ({login, avatar_url, html_url, logOut}) => {
     )
 }
 
-const mapDispatchToProps = {
-    logOut
-}
+const mapDispatchToProps = { logOut }
 
 const mapStateToProps = ({user}) => {
     const { user: { login, avatar_url, html_url, created_at } } = user;

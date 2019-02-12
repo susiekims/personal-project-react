@@ -4,10 +4,6 @@ import { connect } from "react-redux";
 import eventsAction from '../store/actions/events';
 import userAction from '../store/actions/user';
 
-const LoginPage = styled.div`
-    display: ${({loggedIn}) => loggedIn ? 'none' : 'block'}
-    height: 100vh;
-`
 const LoginWrapper = styled.div`
     width: 600px;
     padding: 50px;
@@ -39,20 +35,18 @@ class Login extends React.Component {
     }
 
     render() {
-
         return (
-        <LoginPage>
             <LoginWrapper>
                 <h2>Get GitHub Info</h2>
                 <form onSubmit={this.handleSubmit} >
                     <input className='login-input' onChange={this.handleChange} type="text" placeholder="Enter your username"/>
-                    <input className="login-button" type="submit" value="Log in"/>
+                    <input className="login-button" type="submit" value="Go →"/>
                 </form>
             {
                 this.props.error ? <p>Sorry, something went wrong. Please try again.</p> : null
             }
             </LoginWrapper>
-        </LoginPage> 
+
         )
     }
 }

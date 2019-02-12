@@ -12,11 +12,4 @@ const Card = styled.div`
     justify-content: space-between;
     margin-bottom: 10px;
 `
-
-// export default ({children}) => (
-//     <Card>
-//         {children}
-//     </Card>
-// )
-
 export default Card;

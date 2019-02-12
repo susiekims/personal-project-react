@@ -61,7 +61,7 @@ h1 {
 
 @media (max-width: 900px) {
     .user > * {
-        margin: 0 auto;
+        margin: 10px auto;
         display: block;
         text-align: center;
     }

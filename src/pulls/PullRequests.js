@@ -9,7 +9,7 @@ const PullRequests = ({pulls}) => (
             pulls.length === 0 ? <p>This user has no recent pull requests.</p> :
             <ul>
                 {
-                    pulls.map(({merged, name, state, url, id, repoUrl}) => <li key={id}><PullRequest merged={merged} name={name} state={state} url={url} repoUrl={repoUrl}/></li>)
+                    pulls.map(({merged, name, state, url, id, repoUrl}) => <PullRequest key={id} merged={merged} name={name} state={state} url={url} repoUrl={repoUrl}/>)
                 }
             </ul>
         }

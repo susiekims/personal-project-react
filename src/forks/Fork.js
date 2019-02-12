@@ -2,7 +2,7 @@ import React from 'react';
 import Card from "../components/Card";
 import Title from '../components/Title';
 
-const Fork = ({title, repoUrl, baseRepoUrl}) => (
+const Fork = ({title, repoUrl, baseRepoUrl, id}) => (
     <li>
         <Card>
             <Title><a href={repoUrl}>{title}</a></Title>

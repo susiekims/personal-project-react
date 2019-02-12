@@ -5,16 +5,16 @@ import PullRequests from '../pulls/PullRequests';
 import User from './User';
 import FlexItem from '../components/FlexItem';
 
-const Main = ({forks, pulls, user}) => (
+const Main = () => (
     <FlexWrapper>
         <FlexItem width="20%">
             <User />
         </FlexItem>
         <FlexItem width="36%">
-            <Forks forks={forks}/>
+            <Forks/>
         </FlexItem>
         <FlexItem width="36%">
-            <PullRequests pulls={pulls}/>
+            <PullRequests/>
         </FlexItem>
     </FlexWrapper>
 )
