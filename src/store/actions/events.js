@@ -3,12 +3,13 @@ import { GET_EVENTS, GET_EVENTS_SUCCESS, GET_EVENTS_FAILURE } from "../constants
 const transformEvents = data => {
     return {
         pulls : data.filter(({type}) => type === "PullRequestEvent" )
-        .map(({payload: { pull_request: {title, html_url, state, merged}}}) => {
+        .map(({payload: { pull_request: { title, html_url, state, merged, head: { repo: { html_url: repoUrl}}}}}) => {
             return {
             url: html_url, 
             name: title,
             state,
             merged,
+            repoUrl,
             }
         }),
         forks: data.filter(({type}) => type === "ForkEvent")
@@ -16,7 +17,7 @@ const transformEvents = data => {
             return {
                 baseRepoUrl: `https://github.com/${name}`, 
                 repoUrl: `https://github.com/${full_name}`, 
-                title
+                title,
             }
         })
     }

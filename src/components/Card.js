@@ -2,12 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
-    border-radius: 4px;
-    padding: 20px;
-    box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
-    margin: 20px auto;
+    display: flex;
+    border-radius: 10px;
+    padding: 10px 25px;
     width: 100%;
     position: relative;
+    background: #f2f2f2;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
 `
 
 export default ({children}) => (

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 
 const FlexItem = styled.div`
-    width: 25%;
+    width: 32%;
 
     @media (max-width: 900px) {
         width: 100%;

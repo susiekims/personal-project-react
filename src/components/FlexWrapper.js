@@ -3,7 +3,7 @@ import React from 'react';
 
 const FlexWrapper = styled.div`
     display: flex;
-    width: 80%;
+    width: 90%;
     margin: 20px auto 0;
     justify-content: space-between;
 

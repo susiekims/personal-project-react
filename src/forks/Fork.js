@@ -1,11 +1,12 @@
 import React from 'react';
 import Card from "../components/Card";
+import Title from '../components/Title';
 
 const Fork = ({title, repoUrl, baseRepoUrl}) => (
     <li>
         <Card>
-            <h3><a href={repoUrl}>{title}</a></h3>
-            <a href={baseRepoUrl}>Base Repo</a>
+            <Title><a href={repoUrl}>{title}</a></Title>
+            <a className="arrow" href={baseRepoUrl}>↗</a>
         </Card>
     </li>
 ) 

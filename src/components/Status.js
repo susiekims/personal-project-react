@@ -8,13 +8,11 @@ const colors = {
 }
 
 const Status = styled.div`
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 10px;
     border-radius: 50%;
     background-color: ${({status}) => colors[status]};
-    position: absolute;
-    right: 20px;
-    top: 50%
-    transform: translateY(-50%);
 `
 export default Status;
