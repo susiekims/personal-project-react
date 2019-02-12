@@ -20,7 +20,7 @@ class App extends Component {
       <div className="App">
       {
         this.props.loggedIn ? 
-        <Main forks={this.props.forks} pulls={this.props.pulls}/> :
+        <Main /> :
         <Login />
       }
     </div>
