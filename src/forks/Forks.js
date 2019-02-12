@@ -1,5 +1,6 @@
 import React from 'react';
 import Fork from './Fork';
+import { connect } from "react-redux";
 
 const Forks = ({forks}) => (
     <div>
@@ -15,4 +16,8 @@ const Forks = ({forks}) => (
     </div>
 )
 
-export default Forks;
+const mapStateToProps = ({events: {forks}}) => {
+    return { forks }
+}
+  
+export default connect(mapStateToProps)(Forks);

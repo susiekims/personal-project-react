@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from "react-redux";
 import Avatar from '../components/Avatar';
+import logOut from '../store/actions/logout'
 
-const User = ({login, avatar_url, html_url, created_at}) => {
+const User = ({login, avatar_url, html_url, logOut}) => {
  return (
-     <div>
+     <div className="user">
          <Avatar src={avatar_url}/>
          <h1>{login}</h1>
-         <h2>User since {created_at}</h2>
-         <a href={html_url}>View Profile</a>
-         <button>Log Out</button>
+         <a className="button" href={html_url}>View Profile</a>
+         <button onClick={logOut} className="button--inverted">Log Out</button>
      </div>
     )
+}
+
+const mapDispatchToProps = {
+    logOut
 }
 
 const mapStateToProps = ({user}) => {
@@ -19,4 +23,4 @@ const mapStateToProps = ({user}) => {
     return { login, avatar_url, html_url, created_at }
 }
 
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps, mapDispatchToProps)(User);

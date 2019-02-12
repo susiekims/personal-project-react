@@ -9,7 +9,7 @@ const LoginPage = styled.div`
     height: 100vh;
 `
 const LoginWrapper = styled.div`
-    width: 300px;
+    width: 600px;
     padding: 50px;
     position: absolute;
     top: 50%;
@@ -25,15 +25,17 @@ class Login extends React.Component {
 
     handleChange = (e) => {
         this.setState({
-          username: e.target.value
+          username: e.target.value.trim()
         })
       }
     
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.getEvents(this.state.username);
-        this.props.getUsers(this.state.username);
-        this.setState({username: ''})
+        if (this.state.username.length > 0) {
+            this.props.getEvents(this.state.username);
+            this.props.getUsers(this.state.username);
+            this.setState({username: ''})
+        }
     }
 
     render() {
@@ -41,13 +43,13 @@ class Login extends React.Component {
         return (
         <LoginPage>
             <LoginWrapper>
-                <h1>Log in</h1>
+                <h2>Get GitHub Info</h2>
                 <form onSubmit={this.handleSubmit} >
-                    <input onChange={this.handleChange} type="text" placeholder="enter your username"/>
-                    <input type="submit" value="Log in"/>
+                    <input className='login-input' onChange={this.handleChange} type="text" placeholder="Enter your username"/>
+                    <input className="login-button" type="submit" value="Log in"/>
                 </form>
             {
-                this.props.error ? <p>Please enter a valid username.</p> : null
+                this.props.error ? <p>Sorry, something went wrong. Please try again.</p> : null
             }
             </LoginWrapper>
         </LoginPage> 
@@ -57,7 +59,7 @@ class Login extends React.Component {
 
 const mapStateToProps = ({events}) => {
     console.log(events.error);
-    const {receivedEvents, error } = events;
+    const { error } = events;
     return {
         error
     }

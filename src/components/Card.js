@@ -7,14 +7,16 @@ const Card = styled.div`
     padding: 10px 25px;
     width: 100%;
     position: relative;
-    background: #f2f2f2;
+    background: #f1f1f1;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 `
 
-export default ({children}) => (
-    <Card>
-        {children}
-    </Card>
-)
+// export default ({children}) => (
+//     <Card>
+//         {children}
+//     </Card>
+// )
+
+export default Card;

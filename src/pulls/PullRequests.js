@@ -1,11 +1,12 @@
 import React from 'react';
 import PullRequest from './PullRequest';
+import { connect } from 'react-redux';
 
 const PullRequests = ({pulls}) => (
     <div>
         <h2>Pull Request Events</h2>
         {
-            pulls.length === 0 ? <p>This user has no recent pull requests</p> :
+            pulls.length === 0 ? <p>This user has no recent pull requests.</p> :
             <ul>
                 {
                     pulls.map(({merged, name, state, url, id, repoUrl}) => <li key={id}><PullRequest merged={merged} name={name} state={state} url={url} repoUrl={repoUrl}/></li>)
@@ -15,4 +16,8 @@ const PullRequests = ({pulls}) => (
     </div>
 )
 
-export default PullRequests;
+const mapStateToProps = ({events: {pulls}}) => {
+   return { pulls }
+}
+
+export default connect(mapStateToProps)(PullRequests);

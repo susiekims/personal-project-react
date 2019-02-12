@@ -54,14 +54,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({user, events}) => {
-  const { pulls, forks, receivedEvents, error } = events;
+const mapStateToProps = ({user: {receivedUser}}) => {
   return {
-    pulls,
-    forks,
-    loggedIn: receivedEvents,
-    error
-    // user
+    loggedIn: receivedUser,
   }
 }
 

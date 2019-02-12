@@ -19,6 +19,7 @@ html {
 
 body {
     font-size: 1.2rem;
+    background: #f8f8f8;
 }
 
 li {
@@ -36,6 +37,78 @@ a:hover {
     text-decoration: underline;
 }
 
+button {
+    border: none;
+    box-shadow: none;
+}
+
+.button {
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    background: #111111;
+    color: white;
+}
+
 .arrow {
     display: inline;
+    font-size: 1.5rem;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+@media (max-width: 900px) {
+    .user > * {
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+    }
+
+    .button--inverted {
+        width: 100%;
+    }
+}
+
+.login-button {
+    border: .5px solid #111;
+    padding: 5px 10px;
+    border-radius: 0 5px 5px 0;
+    text-transform: uppercase;
+    background: #111111;
+    color: white;
+}
+
+.login-input {
+    background: none;
+    border: .5px solid #111;
+    border-radius: 5px 0 0 5px;
+    width: 300px;
+    height: 24px;
+    margin-right: -2px;
+}
+
+.login-input::placeholder {
+    display: block;
+    padding-left: 10px;
+}
+
+form {
+    display: inline-block;
+}
+
+.button--inverted {
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    background: none;
+    color: #111111;
+    border: 1px solid #111;
+    display: block;
+    margin-top: 10px;
+}
+
+.button--inverted:hover {
+    cursor: pointer;
 }

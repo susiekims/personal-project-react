@@ -7,13 +7,13 @@ import FlexItem from '../components/FlexItem';
 
 const Main = ({forks, pulls, user}) => (
     <FlexWrapper>
-        <FlexItem>
+        <FlexItem width="20%">
             <User />
         </FlexItem>
-        <FlexItem>
+        <FlexItem width="36%">
             <Forks forks={forks}/>
         </FlexItem>
-        <FlexItem>
+        <FlexItem width="36%">
             <PullRequests pulls={pulls}/>
         </FlexItem>
     </FlexWrapper>
