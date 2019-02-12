@@ -6,6 +6,7 @@ const userAction = (username) => {
         fetch(`https://api.github.com/users/${username}`)
             .then(res => res.json())
             .then(
+                
                 res => dispatch({ type: GET_USER_SUCCESS, payload: res}),
                 err => dispatch({ type: GET_USER_FAILURE, payload: err})
             )

@@ -20,23 +20,8 @@ const eventsReducer = (state = initialState, {type, payload} ) => {
                 ...state, 
                 gettingEvents: false, 
                 receivedEvents: true,
-                pulls: payload.filter(({type}) => type === "PullRequestEvent" )
-                .map(({payload: { pull_request: {title, html_url, state, merged}}}) => {
-                    return {
-                    url: html_url, 
-                    name: title,
-                    state,
-                    merged,
-                    }
-                }),
-                forks: payload.filter(({type}) => type === "ForkEvent")
-                .map(({repo: { name }, payload: { forkee: {full_name, name: title}}}) => {
-                    return {
-                        baseRepoUrl: `https://github.com/${name}`, 
-                        repoUrl: `https://github.com/${full_name}`, 
-                        title
-                    }
-                })
+                pulls: payload.pulls,
+                forks: payload.forks
             }
         case GET_EVENTS_FAILURE:
             return {

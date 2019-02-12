@@ -4,7 +4,11 @@ import Login from './login/Login';
 import Main from './main/Main';
 import { connect } from "react-redux";
 import eventsAction from './store/actions/events';
-import userAction from './store/actions/events';
+import userAction from './store/actions/user';
+
+import user from './store/reducers/user';
+import events from './store/reducers/events';
+
 
 import eventsReducer from './store/reducers/events';
 
@@ -17,24 +21,25 @@ import eventsReducer from './store/reducers/events';
 // Each of the pull requests should have, in addition, a visual indicator for whether it is open, closed or merged. This could be colour coded, or just have the status in words next to it.
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { 
-      username: ''
-    };
-  }
+  // constructor() {
+  //   super();
+  //   this.state = { 
+  //     username: ''
+  //   };
+  // }
 
-  handleChange = (e) => {
-    this.setState({
-      username: e.target.value
-    })
-  }
+  // handleChange = (e) => {
+  //   this.setState({
+  //     username: e.target.value
+  //   })
+  // }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.getEvents(this.state.username);
-    this.setState({username: ''})
-  }
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   this.props.getEvents(this.state.username);
+  //   this.props.getUsers(this.state.username);
+  //   this.setState({username: ''})
+  // }
 
   render() {
     return (
@@ -42,26 +47,27 @@ class App extends Component {
       {
         this.props.loggedIn ? 
         <Main forks={this.props.forks} pulls={this.props.pulls}/> :
-        <Login loggedIn={this.props.loggedIn} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+        <Login />
       }
     </div>
     );
   }
 }
 
-const mapStateToProps = ({userReducer, eventsReducer}) => {
+const mapStateToProps = ({user, events}) => {
+  const { pulls, forks, receivedEvents } = events;
   return {
-    pulls: eventsReducer.pulls,
-    forks: eventsReducer.forks,
-    loggedIn: eventsReducer.receivedEvents,
-    user: userReducer.user
+    pulls,
+    forks,
+    loggedIn: receivedEvents,
+    // user
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  getEvents: (username) => dispatch(eventsAction(username)),
-  getUsers: (username) => dispatch(userAction(username))
-})
+const mapDispatchToProps = {
+  getEvents: eventsAction,
+  getUsers: userAction
+}
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 
