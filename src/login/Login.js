@@ -18,20 +18,10 @@ const LoginWrapper = styled.div`
     text-align: center;
 `
 
-// export default ({ handleSubmit, handleChange }) => (
-//     <Login>
-//         <LoginWrapper>
-//             <h1>Log in</h1>
-//             <form onSubmit={handleSubmit} >
-//                 <input onChange={handleChange} type="text" placeholder="enter your username"/>
-//                 <input type="submit" value="Log in"/>
-//             </form>
-//         </LoginWrapper>
-//     </Login>
-// )
-
 class Login extends React.Component {
-    state = {username: ''}
+    state = {
+        username: ''
+    }
 
     handleChange = (e) => {
         this.setState({
@@ -47,6 +37,7 @@ class Login extends React.Component {
     }
 
     render() {
+
         return (
         <LoginPage>
             <LoginWrapper>
@@ -55,27 +46,28 @@ class Login extends React.Component {
                     <input onChange={this.handleChange} type="text" placeholder="enter your username"/>
                     <input type="submit" value="Log in"/>
                 </form>
+            {
+                this.props.error ? <p>Please enter a valid username.</p> : null
+            }
             </LoginWrapper>
-        </LoginPage>
+        </LoginPage> 
         )
     }
 }
 
-// const mapStateToProps = ({user, events}) => {
-//     const { pulls, forks, receivedEvents } = events;
-//     return {
-//         pulls,
-//         forks,
-//         // loggedIn: receivedEvents,
-//         user
-//     }
-// }
+const mapStateToProps = ({events}) => {
+    console.log(events.error);
+    const {receivedEvents, error } = events;
+    return {
+        error
+    }
+}
 
 const mapDispatchToProps = {
     getEvents: eventsAction,
     getUsers: userAction
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 
